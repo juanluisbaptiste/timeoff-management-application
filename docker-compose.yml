@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  timeoffmanagement:
+    image: timeoffmanagement
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
