@@ -24,7 +24,7 @@ steps:
     settings:
       dockerfile: Dockerfile
       context: .
-      registry: hub.docker.com
+      registry: docker.io
       repo: juanluisbaptiste/timeoff
       username:
         from_secret: docker_username
