@@ -1,0 +1,37 @@
+---
+kind: pipeline
+name: jbtech-timeoff
+
+steps:
+  # - name: Notify
+  #   image: drillster/drone-email
+  #   settings:
+  #     host:
+  #       from_secret: smtp_server
+  #     port:
+  #       from_secret: smtp_port
+  #     username:
+  #       from_secret: smtp_username
+  #     password:
+  #       from_secret: smtp_password
+  #     from: drone@ctecsas.com
+  #     recipients: [ infra@ctecsas.com ]
+  #   when:
+  #     status: [ success, changed, failure ]
+
+  - name: docker
+    image: plugins/docker
+    settings:
+      dockerfile: Dockerfile
+      context: .
+      registry: hub.docker.com
+      repo: juanluisbaptiste/timeoff
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      tags: [ latest ]
+    when:
+    event:
+      - push
+      - tag
