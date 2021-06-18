@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  timeoffmanagement:
+    image: juanluisbaptiste/timeoff
+    deploy:
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.http.services.timeoff.loadbalancer.server.port=3000
+        - traefik.http.routers.timeoff.service=timeoff
+        - traefik.http.routers.timeoff.rule=Host(`timeoff.juanbaptiste.tech`)
+        - traefik.http.routers.timeoff.entrypoints=https
+        - traefik.http.routers.timeoff.tls.certresolver=le
+        - traefik.http.services.timeoff.loadbalancer.sticky=true
+        - traefik.http.services.timeoff.loadbalancer.sticky.cookie.name=StickyCookie
+        - traefik.http.services.timeoff.loadbalancer.sticky.cookie.secure=true
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          #cpus: "1.5"
+          memory: 2048m
+        reservations:
+          #cpus: "1"
+          memory: 384m
+      placement:
+        constraints:
+          - node.role == worker
+    volumes:
+      - /mnt/efs/web-prod/sites/timeoff/config:/app/timeoff-management/config
+      - /mnt/efs/web-prod/sites/timeoff/db.development.sqlite:/app/timeoff-management/db.development.sqlite
+      - '/etc/localtime:/etc/localtime:ro'
+    # env_file:
+    #   - .env
+    networks:
+      - traefik_proxy
+    environment:
+      NODE_ENV: production
+    # ports:
+    #   - 3000:3000
+
+networks:
+  traefik_proxy:
+    external:
+      name: traefik_proxy

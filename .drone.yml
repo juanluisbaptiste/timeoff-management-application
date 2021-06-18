@@ -46,7 +46,10 @@ steps:
       key:
         from_secret: ssh_key
       script:
-        - echo "Deploying timeoff app"
+        - echo "* START: Deployment process of timeoff app"
+        - git clone https://github.com/juanluisbaptiste/timeoff-management-application.git
+        - cd timeoff-management-application
+        - echo "  - Deploying timeoff app"
         - /bin/bash sudo ./deploy.sh timeoff
         # - touch /tmp/test
     when:
