@@ -14,8 +14,8 @@ steps:
   #       from_secret: smtp_username
   #     password:
   #       from_secret: smtp_password
-  #     from: drone@ctecsas.com
-  #     recipients: [ infra@ctecsas.com ]
+  #     from: drone@juanbaptiste.tech
+  #     recipients: [ juan@juanbaptiste.tech ]
   #   when:
   #     status: [ success, changed, failure ]
 
