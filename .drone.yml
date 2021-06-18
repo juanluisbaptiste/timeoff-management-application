@@ -47,7 +47,7 @@ steps:
         from_secret: ssh_key
       script:
         - echo "Deploying timeoff app"
-        - /bin/bash ./deploy.sh timeoff
+        - /bin/bash sudo ./deploy.sh timeoff
         # - touch /tmp/test
     when:
       branch:
