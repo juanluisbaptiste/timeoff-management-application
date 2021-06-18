@@ -2,8 +2,12 @@ version: '3.7'
 
 services:
   timeoffmanagement:
-    image: timeoffmanagement
+    image: juanluisbaptiste/timeoff
     environment:
       NODE_ENV: production
     ports:
       - 3000:3000
+    volumes:
+      - ./config:/app/timeoff-management/config
+      - ./db.development.sqlite:/app/timeoff-management/db.development.sqlite
+      - '/etc/localtime:/etc/localtime:ro'

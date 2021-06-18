@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   timeoffmanagement:
+    image: juanluisbaptiste/timeoff:dev
     build:
       context: .
       dockerfile: ./Dockerfile
