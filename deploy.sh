@@ -1,4 +1,6 @@
 #!/bin/bash
+# Application deployment script.
+
 DEBUG="${DEBUG:-0}"
 [ $DEBUG -eq 1 ] && set -x && env
 
@@ -24,7 +26,7 @@ echo "Removing previous deployment of application: ${STACK_NAME} ..."
 docker stack rm ${STACK_NAME}
 
 echo "Deploying application: ${STACK_NAME} ..."
-mkdir -p ${MOUNT_POINT}
+sudo mkdir -p ${MOUNT_POINT}
 sudo touch ${MOUNT_POINT}/db.development.sqlite
 sudo chown 100 ${MOUNT_POINT}/db.development.sqlite
 sudo chmod 664 ${MOUNT_POINT}/db.development.sqlite
