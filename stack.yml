@@ -41,7 +41,8 @@ services:
     networks:
       - traefik_proxy
     environment:
-      NODE_ENV: production
+      # NODE_ENV: production
+      NODE_ENV:  development
     # ports:
     #   - 3000:3000
 
