@@ -57,5 +57,5 @@ function add_secrets() {
   echo "Done."
 }
 
-# enable_repo
+enable_repo
 add_secrets
