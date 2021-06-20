@@ -4,7 +4,7 @@ services:
   timeoffmanagement:
     image: juanluisbaptiste/timeoff
     deploy:
-      replicas: 1
+      replicas: 2
       labels:
         - traefik.enable=true
         - traefik.http.services.timeoff.loadbalancer.server.port=3000
