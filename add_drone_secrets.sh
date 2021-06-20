@@ -31,7 +31,7 @@ function add_secret() {
                     secret add \
                     --repository ${DRONE_REPOSITORY_NAME} \
                     --name ${secret_name} \
-                    --data ${secret_value} ${DRONE_REPOSITORY_NAME}
+                    --data "${secret_value}" ${DRONE_REPOSITORY_NAME}
 }
 
 function enable_repo (){
