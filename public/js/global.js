@@ -189,6 +189,7 @@ $(document).ready(function(){
         $('#'+divId).html(response);
       }
     });
+
     return '<div id="'+ divId +'">Loading...</div>';
   }
 });
@@ -215,4 +216,80 @@ $(document).ready(function(){
     });
     return '<div id="'+ divId +'">Loading...</div>';
   }
+});
+
+$(document).ready(function() {
+  const fetchNotifications = () => {
+    if (typeof($.ajax) === 'function') {
+      $.ajax({
+        url: '/api/v1/notifications/',
+        success: function(args){
+          const error = args.error;
+          const data = args.data;
+
+          if (error) {
+            console.log('Failed to fetch notifications');
+            return;
+          }
+
+          const dropDown = $('#header-notification-dropdown ul.dropdown-menu');
+          const badge = $('#header-notification-dropdown .notification-badge');
+
+          if (!data || !data.length) {
+            badge.addClass('hidden');
+            dropDown.empty();
+            dropDown.append('<li class="dropdown-header">No notifications</li>')
+
+            document.title = document.title.replace(/\(\d+\)\s*/, '');
+
+            return;
+          }
+
+          const numberOfNotifications = data
+            .map(function(d) {return d.numberOfRequests})
+            .reduce(function(acc, it){ return acc + it}, 0)
+
+          badge.removeClass('hidden').html(numberOfNotifications);
+
+          if (!document.title.startsWith('(')) {
+            document.title = '(' + numberOfNotifications + ') ' + document.title;
+          } else {
+            document.title = document.title.replace(/\(\d+\)/, '('+numberOfNotifications+')');
+          }
+
+          dropDown.empty();
+
+          for (var i=0; i<data.length; i++) {
+            const notification = data[i];
+            dropDown.append(
+              '<li><a href="'+notification.link+'">'+notification.label+'</a></li>'
+            );
+          }
+        }
+      });
+    }
+
+    setTimeout(fetchNotifications, 30 * 1000);
+  }
+
+  fetchNotifications();
+});
+
+/**
+ * Prevent for double submission.
+ */
+ $(document).ready(function(){
+  $('.single-click').on('click', function(e) {
+    e.stopPropagation();
+
+    $(e.target).prop('disabled', true);
+    var form = $(e.target).closest('form');
+    var submitName = $(e.target).attr('name');
+    if (submitName !== undefined) {
+      $('<input>').attr({type: 'hidden', name: submitName, value: '1'}).appendTo(form);
+    }
+    form.submit();
+
+    return false;
+  });
 });
