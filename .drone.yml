@@ -22,8 +22,8 @@ steps:
   - name: docker
     image: plugins/docker
     settings:
-      dockerfile: Dockerfile
-      context: .
+      # dockerfile: Dockerfile
+      # context: .
       registry: docker.io
       repo: juanluisbaptiste/timeoff
       username:
