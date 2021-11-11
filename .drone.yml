@@ -1,5 +1,6 @@
 ---
 kind: pipeline
+type: docker
 name: jbtech-timeoff
 
 steps:
@@ -24,7 +25,7 @@ steps:
     settings:
       # dockerfile: Dockerfile
       # context: .
-      registry: docker.io
+      # registry: docker.io
       repo: juanluisbaptiste/timeoff
       username:
         from_secret: docker_username
